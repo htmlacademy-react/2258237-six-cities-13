@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Владимир Троянский](https://up.htmlacademy.ru/react/13/user/2258237).
-* Наставник: `Неизвестно`.
+* Наставник: [Петр Хасанов](https://up.htmlacademy.ru/profession/react/12/react/13/user/1058473).
 
 ---
 
