@@ -1,8 +1,15 @@
 import MainPage from '../../pages/main-page/main-page';
 
-function App(): JSX.Element {
+type AppScreenProps = {
+  userLogin: string;
+  favoriteHotelsCount: number;
+  currentOffersInCity: number;
+  currentCityName: string;
+}
+
+function App({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName}: AppScreenProps): JSX.Element {
   return (
-    <MainPage />
+    <MainPage userLogin={userLogin} favoriteHotelsCount={favoriteHotelsCount} currentOffersInCity={currentOffersInCity} currentCityName={currentCityName} />
   );
 }
 

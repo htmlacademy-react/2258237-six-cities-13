@@ -2,7 +2,14 @@ import PlaceCard from '../../components/place-card/place-card';
 
 const BASEHOTELSCOUNT = 5;
 
-function MainPage() {
+type MainPageProps = {
+  userLogin: string;
+  favoriteHotelsCount: number;
+  currentOffersInCity: number;
+  currentCityName: string;
+}
+
+function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -28,9 +35,11 @@ function MainPage() {
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
+                      {userLogin}
                     </span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">
+                      {favoriteHotelsCount}
+                    </span>
                   </a>
                 </li>
                 <li className="header__nav-item">
@@ -85,7 +94,7 @@ function MainPage() {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{currentOffersInCity} places to stay in {currentCityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

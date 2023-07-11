@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <App userLogin={'Oliver.conner@gmail.com'} favoriteHotelsCount={3} currentOffersInCity={312} currentCityName={'Amsterdam'} />
   </React.StrictMode>
 );
