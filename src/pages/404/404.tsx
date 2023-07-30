@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 
-function NotFoundPage(): JSX.Element {
+function Page404(): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -25,4 +25,4 @@ function NotFoundPage(): JSX.Element {
   );
 }
 
-export default NotFoundPage;
+export default Page404;
