@@ -2,10 +2,10 @@ import { Offer } from '../types/offer';
 
 export const offers: Offer[] = [
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
+    id: '6af6f741-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
-    price: 120,
+    price:90,
     city: {
       name: 'Amsterdam',
       location: {
@@ -33,14 +33,14 @@ export const offers: Offer[] = [
       isPro: false
     },
     images: [
-      'https://url-to-image/image.png'
+      'https://loremflickr.com/248/152?random=111'
     ],
     maxAdults: 4
   }, {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-    title: 'Beautiful & luxurious studio at great location',
+    id: '6af6f710-c28d-4121-82cd-e0b462a27f00',
+    title: 'Beautiful & luxurious apartament',
     type: 'apartment',
-    price: 120,
+    price: 540,
     city: {
       name: 'Amsterdam',
       location: {
@@ -68,14 +68,14 @@ export const offers: Offer[] = [
       isPro: false
     },
     images: [
-      'https://url-to-image/image.png'
+      'https://loremflickr.com/248/152?random=112'
     ],
     maxAdults: 4
   }, {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-    title: 'Beautiful & luxurious studio at great location',
+    id: '6af6f755-c28d-4121-82cd-e0b462a27f00',
+    title: 'Beautiful location',
     type: 'apartment',
-    price: 120,
+    price: 99,
     city: {
       name: 'Amsterdam',
       location: {
@@ -103,14 +103,14 @@ export const offers: Offer[] = [
       isPro: false
     },
     images: [
-      'https://url-to-image/image.png'
+      'https://loremflickr.com/248/152?random=113'
     ],
     maxAdults: 4
   }, {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-    title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
-    price: 120,
+    id: '6af6f711-c28d-4122-82cd-e0b462a27f00',
+    title: 'House in city',
+    type: 'house',
+    price: 155,
     city: {
       name: 'Amsterdam',
       location: {
@@ -138,7 +138,7 @@ export const offers: Offer[] = [
       isPro: false
     },
     images: [
-      'https://url-to-image/image.png'
+      'https://loremflickr.com/248/152?random=115'
     ],
     maxAdults: 4
   }

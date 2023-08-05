@@ -1,16 +1,17 @@
-import Logo from '../../components/logo/logo';
-import PlaceCard from '../../components/place-card/place-card';
+import { Offer } from '../../types/offer';
 
-const BASEHOTELSCOUNT = 5;
+import Logo from '../../components/logo/logo';
+import CardList from '../../components/card-list/card-list';
 
 type MainPageProps = {
   userLogin: string;
   favoriteHotelsCount: number;
   currentOffersInCity: number;
   currentCityName: string;
+  offers: Offer[];
 }
 
-function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName}: MainPageProps): JSX.Element {
+function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName, offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -112,11 +113,7 @@ function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentC
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  Array(BASEHOTELSCOUNT).fill(<PlaceCard />)
-                }
-              </div>
+              <CardList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

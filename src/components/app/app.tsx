@@ -2,6 +2,8 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../config';
 
+import { Offer } from '../../types/offer';
+
 import MainPage from '../../pages/main/main';
 import FavoritePage from '../../pages/favorites/favorites';
 import LoginPage from '../../pages/login/login';
@@ -15,9 +17,10 @@ type AppScreenProps = {
   favoriteHotelsCount: number;
   currentOffersInCity: number;
   currentCityName: string;
+  offers: Offer[];
 }
 
-function App({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName}: AppScreenProps): JSX.Element {
+function App({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName, offers}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -31,6 +34,7 @@ function App({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityNa
                 favoriteHotelsCount={favoriteHotelsCount}
                 currentOffersInCity={currentOffersInCity}
                 currentCityName={currentCityName}
+                offers={offers}
               />
             }
           />

@@ -1,4 +1,11 @@
-function PlaceCard(): JSX.Element {
+type PlaceCardProps = {
+  title: string;
+  type: string;
+  price: number;
+  image: string;
+}
+
+function PlaceCard({title, type, price, image}: PlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
 
@@ -6,7 +13,7 @@ function PlaceCard(): JSX.Element {
         <a href="#">
           <img
             className="place-card__image"
-            src="img/room.jpg"
+            src={image}
             width={260}
             height={200}
             alt="Place image"
@@ -17,7 +24,7 @@ function PlaceCard(): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€120{' '}</b>
+            <b className="place-card__price-value">€{price}{' '}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
@@ -44,11 +51,11 @@ function PlaceCard(): JSX.Element {
 
         <h2 className="place-card__name">
           <a href="#">
-            Beautiful &amp; luxurious apartment at great location
+            {title}
           </a>
         </h2>
 
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{type}</p>
       </div>
 
     </article>
