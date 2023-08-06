@@ -43,9 +43,9 @@ function App({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityNa
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritePage />
+                <FavoritePage offers={offers} />
               </PrivateRoute>
             }
           />

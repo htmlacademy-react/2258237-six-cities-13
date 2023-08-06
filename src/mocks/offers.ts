@@ -19,8 +19,8 @@ export const offers: Offer[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
-    isPremium: false,
+    isFavorite: true,
+    isPremium: true,
     rating: 4,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     bedrooms: 3,
@@ -89,7 +89,7 @@ export const offers: Offer[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -112,7 +112,7 @@ export const offers: Offer[] = [
     type: 'house',
     price: 155,
     city: {
-      name: 'Amsterdam',
+      name: 'Cologne',
       location: {
         latitude: 52.35514938496378,
         longitude: 4.673877537499948,
@@ -124,8 +124,8 @@ export const offers: Offer[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
-    isPremium: false,
+    isFavorite: true,
+    isPremium: true,
     rating: 4,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     bedrooms: 3,
