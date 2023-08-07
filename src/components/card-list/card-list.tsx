@@ -17,6 +17,7 @@ function CardList({offers}: PlaceCardProps): JSX.Element {
             type={offer.type}
             price={offer.price}
             image={offer.images[0]}
+            id={offer.id}
           />
         ))
       }
