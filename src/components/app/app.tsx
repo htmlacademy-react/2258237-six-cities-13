@@ -57,7 +57,7 @@ function App({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityNa
 
           <Route path={AppRoute.Offer}>
             <Route index element={<Page404 />} />
-            <Route path=':id' element={<OfferPage />} />
+            <Route path=':id' element={<OfferPage offers={offers}/>} />
           </Route>
 
           <Route

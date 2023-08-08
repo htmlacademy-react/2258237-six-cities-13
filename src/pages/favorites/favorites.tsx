@@ -14,7 +14,7 @@ type FavoriteCityOffers = {
 
 
 function FavoritePage({offers}: FavoritePageProps): JSX.Element {
-  let favoriteCitiesOffers: FavoriteCityOffers[] = [];
+  const favoriteCitiesOffers: FavoriteCityOffers[] = [];
 
   const favoriteCities: string[] = offers.reduce((acc: string[], item: Offer) => {
     if (acc.includes(item.city.name)) {
