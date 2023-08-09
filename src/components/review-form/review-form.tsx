@@ -1,16 +1,39 @@
 import { useState, ChangeEvent, Fragment } from 'react';
 
-const ratingMap = {
-  '5': 'perfect',
-  '4': 'good',
-  '3': 'not bad',
-  '2': 'badly',
-  '1': 'terribly',
-};
+import { COUNT_OF_SYMBOLS_REVIEW } from '../../config';
+
+type CommentHandler = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+
+const ratingMap = [
+  {
+    score: '5',
+    title: 'perfect',
+  }, {
+    score: '4',
+    title: 'good',
+  }, {
+    score: '3',
+    title: 'not bad',
+  }, {
+    score: '2',
+    title: 'badly',
+  }, {
+    score: '1',
+    title: 'terrible',
+  }
+];
 
 function ReviewForm() {
-  const [rating, setRating] = useState('');
-  const [reviewText, setReviewText] = useState('');
+  const [comment, setComment] = useState({rating: '-1', review: ''});
+
+  function handleCommentChange({ target }: CommentHandler) {
+    setComment({ ...comment, [target.name]: target.value });
+  }
+
+  function canSubmit () {
+    return comment.review.length > COUNT_OF_SYMBOLS_REVIEW;
+  }
+
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -19,7 +42,7 @@ function ReviewForm() {
       </label>
       <div className="reviews__rating-form form__rating">
         {
-          Object.entries(ratingMap).reverse().map(([score, title]) => (
+          ratingMap.map(({score, title}) => (
             <Fragment key={score}>
               <input
                 className="form__rating-input visually-hidden"
@@ -27,11 +50,8 @@ function ReviewForm() {
                 value={score}
                 id={`${score}-stars`}
                 type="radio"
-                onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
-                  const value = target.value;
-                  setRating(value);
-                }}
-                checked={rating === score}
+                onChange={handleCommentChange}
+                checked={comment.rating === score}
               />
               <label
                 htmlFor={`${score}-stars`}
@@ -51,11 +71,8 @@ function ReviewForm() {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => {
-          const value = target.value;
-          setReviewText(value);
-        }}
-        value={reviewText}
+        onChange={handleCommentChange}
+        value={comment.review}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -67,7 +84,7 @@ function ReviewForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={canSubmit()}
         >
           Submit
         </button>

@@ -1,5 +1,6 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+import Page404 from '../404/404';
 import ReviewForm from '../../components/review-form/review-form';
 import Logo from '../../components/logo/logo';
 
@@ -15,7 +16,7 @@ function OfferPage({offers}: OfferPageProps): JSX.Element {
   const offer = offers.find((current) => current.id === id);
 
   if (!offer) {
-    return <Navigate to={'404'} />;
+    return <Page404 />;
   }
 
   return (

@@ -31,7 +31,7 @@ function FavoritePage({offers}: FavoritePageProps): JSX.Element {
   });
 
   offers.map((offer: Offer) => {
-    if (offer.isFavorite === true) {
+    if (offer.isFavorite) {
       favoriteCitiesOffers.map((item: FavoriteCityOffers) => {
         if (item.city === offer.city.name) {
           item.offers.push(offer);
