@@ -17,3 +17,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const COUNT_OF_SYMBOLS_REVIEW = 50;
