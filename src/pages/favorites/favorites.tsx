@@ -77,11 +77,12 @@ function FavoritePage({offers}: FavoritePageProps): JSX.Element {
             <ul className="favorites__list">
               {
                 favoriteCitiesOffers.map((cityOffers: FavoriteCityOffers) => (
-                  <FavoriteCityCard
-                    key={cityOffers.city}
-                    city={cityOffers.city}
-                    offers={cityOffers.offers}
-                  />
+                  <li className="favorites__locations-items" key={cityOffers.city}>
+                    <FavoriteCityCard
+                      city={cityOffers.city}
+                      offers={cityOffers.offers}
+                    />
+                  </li>
                 ))
               }
             </ul>
