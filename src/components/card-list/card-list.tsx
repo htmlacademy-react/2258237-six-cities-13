@@ -4,9 +4,11 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {
   offers: Offer[];
+  onListOfferHover: (id: string) => void;
+  onListOfferLeave: () => void;
 }
 
-function CardList({offers}: PlaceCardProps): JSX.Element {
+function CardList({offers, onListOfferHover, onListOfferLeave}: PlaceCardProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {
@@ -18,6 +20,8 @@ function CardList({offers}: PlaceCardProps): JSX.Element {
             price={offer.price}
             image={offer.images[0]}
             id={offer.id}
+            onListOfferHover={onListOfferHover}
+            onListOfferLeave={onListOfferLeave}
           />
         ))
       }

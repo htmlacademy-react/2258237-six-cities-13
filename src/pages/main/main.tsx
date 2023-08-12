@@ -1,17 +1,29 @@
+import { useState } from 'react';
+
 import { Offer } from '../../types/offer';
 
+import Map from '../../components/map/map';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
 
 type MainPageProps = {
   userLogin: string;
   favoriteHotelsCount: number;
-  currentOffersInCity: number;
   currentCityName: string;
   offers: Offer[];
 }
 
-function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentCityName, offers}: MainPageProps): JSX.Element {
+function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: MainPageProps): JSX.Element {
+  const [selectedOfferId, setSelectedOfferId] = useState('');
+
+  const handleOfferCardHover = (id: string): void => {
+    setSelectedOfferId(id);
+  };
+
+  const handleOfferCardLeave = (): void => {
+    setSelectedOfferId('');
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -86,7 +98,7 @@ function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentC
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffersInCity} places to stay in {currentCityName}</b>
+              <b className="places__found">{offers.length} places to stay in {currentCityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by{' '}</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -113,10 +125,20 @@ function MainPage({userLogin, favoriteHotelsCount, currentOffersInCity, currentC
                   </li>
                 </ul>
               </form>
-              <CardList offers={offers} />
+              <CardList
+                offers={offers}
+                onListOfferHover={handleOfferCardHover}
+                onListOfferLeave={handleOfferCardLeave}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                <Map
+                  city={offers[0].city}
+                  offers={offers}
+                  selectedOfferId={selectedOfferId}
+                />
+              </section>
             </div>
           </div>
         </div>
