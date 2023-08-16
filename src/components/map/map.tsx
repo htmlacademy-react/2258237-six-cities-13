@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
-
 import L, { Icon, Marker, layerGroup } from 'leaflet';
-
 
 import useMap from '../../hooks/useMap';
 
@@ -31,8 +29,12 @@ function Map({city, offers, selectedOfferId}: MapProps) {
 
   useEffect(() => {
     if (map) {
+      const currentMarketIcon = getIcon(URL_MARKER_CURRENT);
+      const defaultMarketIcon = getIcon(URL_MARKER_DEFAULT);
+
       const markerLayer = layerGroup().addTo(map);
       const polylineLayer = layerGroup().addTo(map);
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -40,7 +42,7 @@ function Map({city, offers, selectedOfferId}: MapProps) {
         });
 
         marker.setIcon(
-          offer.id === selectedOfferId ? getIcon(URL_MARKER_CURRENT) : getIcon(URL_MARKER_DEFAULT)
+          offer.id === selectedOfferId ? currentMarketIcon : defaultMarketIcon
         ).addTo(markerLayer);
 
         latLngs.push([offer.location.latitude, offer.location.longitude]);
@@ -52,7 +54,6 @@ function Map({city, offers, selectedOfferId}: MapProps) {
 
     }
   }, [map, offers, selectedOfferId]);
-
 
   return (
     <div style={{height: '100%'}} ref={mapRef} />

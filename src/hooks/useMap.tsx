@@ -4,18 +4,19 @@ import { Map, TileLayer } from 'leaflet';
 import { TILE_LAYER, COPYRIGHT } from '../config';
 
 import { City } from '../types/city';
+import { Nullable } from 'vitest';
 
 
 function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
+  mapRef: MutableRefObject<Nullable<HTMLElement>>,
   city: City
-): Map | null {
+): Nullable<Map> {
 
-  const [map, setMap] = useState<Map | null>(null);
+  const [map, setMap] = useState<Nullable<Map>>(null);
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
