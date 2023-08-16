@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 
-import { Icon, Marker, layerGroup } from 'leaflet';
+import L, { Icon, Marker, layerGroup } from 'leaflet';
+
 
 import useMap from '../../hooks/useMap';
 
@@ -16,25 +17,22 @@ type MapProps = {
   selectedOfferId: string;
 }
 
+const getIcon = (icon: string) => new Icon({
+  iconUrl: icon,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 function Map({city, offers, selectedOfferId}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = new Icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const latLngs: [number, number][] = [];
 
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
+      const polylineLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -42,17 +40,22 @@ function Map({city, offers, selectedOfferId}: MapProps) {
         });
 
         marker.setIcon(
-          offer.id === selectedOfferId ? currentCustomIcon : defaultCustomIcon
+          offer.id === selectedOfferId ? getIcon(URL_MARKER_CURRENT) : getIcon(URL_MARKER_DEFAULT)
         ).addTo(markerLayer);
+
+        latLngs.push([offer.location.latitude, offer.location.longitude]);
       });
+
+      const polyline = L.polyline(latLngs).addTo(polylineLayer);
+      map.fitBounds(polyline.getBounds());
+      polylineLayer.clearLayers();
 
     }
   }, [map, offers, selectedOfferId]);
 
+
   return (
-    <div style={{height: '100%'}} ref={mapRef}>
-      test
-    </div>
+    <div style={{height: '100%'}} ref={mapRef} />
   );
 }
 

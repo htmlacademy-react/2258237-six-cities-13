@@ -127,8 +127,8 @@ function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: Mai
               </form>
               <CardList
                 offers={offers}
-                onListOfferHover={handleOfferCardHover}
-                onListOfferLeave={handleOfferCardLeave}
+                onCardOfferHover={handleOfferCardHover}
+                onCardOfferLeave={handleOfferCardLeave}
               />
             </section>
             <div className="cities__right-section">
