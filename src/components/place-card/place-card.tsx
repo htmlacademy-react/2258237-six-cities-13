@@ -8,12 +8,27 @@ type PlaceCardProps = {
   price: number;
   image: string;
   id: string;
+  onCardOfferHover: (id: string) => void;
+  onCardOfferLeave: () => void;
 }
 
-function PlaceCard({title, type, price, image, id}: PlaceCardProps): JSX.Element {
+function PlaceCard(props: PlaceCardProps): JSX.Element {
+  const {title, type, price, image, id, onCardOfferHover, onCardOfferLeave} = props;
+
+  const handleCardOfferHover = (): void => {
+    onCardOfferHover(id);
+  };
+
+  const handleCardOfferLeave = (): void => {
+    onCardOfferLeave();
+  };
 
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={handleCardOfferHover}
+      onMouseLeave={handleCardOfferLeave}
+    >
 
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Offer}/${id}`}>
