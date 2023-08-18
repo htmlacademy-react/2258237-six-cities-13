@@ -2,25 +2,28 @@ import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../config';
 
+import { Offer } from '../../types/offer';
+
 type PlaceCardProps = {
-  title: string;
-  type: string;
-  price: number;
-  image: string;
-  id: string;
-  onCardOfferHover: (id: string) => void;
-  onCardOfferLeave: () => void;
+  offer: Offer;
+  onCardOfferHover?: (id: string) => void;
+  onCardOfferLeave?: () => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {title, type, price, image, id, onCardOfferHover, onCardOfferLeave} = props;
+  const {offer, onCardOfferHover, onCardOfferLeave} = props;
+
 
   const handleCardOfferHover = (): void => {
-    onCardOfferHover(id);
+    if (onCardOfferHover) {
+      return onCardOfferHover(offer.id);
+    }
   };
 
   const handleCardOfferLeave = (): void => {
-    onCardOfferLeave();
+    if (onCardOfferLeave) {
+      return onCardOfferLeave();
+    }
   };
 
   return (
@@ -30,11 +33,16 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       onMouseLeave={handleCardOfferLeave}
     >
 
+      {offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
+
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer}/${id}`}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
-            src={image}
+            src={offer.images[0]}
             width={260}
             height={200}
             alt="Place image"
@@ -45,7 +53,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{price}{' '}</b>
+            <b className="place-card__price-value">€{offer.price}{' '}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
@@ -65,18 +73,18 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{ width: `${offer.rating * 20}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
 
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${id}`}>
-            {title}
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>
+            {offer.title}
           </Link>
         </h2>
 
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
 
     </article>
