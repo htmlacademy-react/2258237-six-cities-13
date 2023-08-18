@@ -49,10 +49,11 @@ function Map({city, offers, selectedOfferId}: MapProps) {
       });
 
       const polyline = L.polyline(latLngs).addTo(polylineLayer);
-      map.fitBounds(polyline.getBounds());
+      map.fitBounds(polyline.getBounds(), {maxZoom: 12});
       polylineLayer.clearLayers();
 
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, offers, selectedOfferId]);
 
   return (
