@@ -4,8 +4,8 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {
   offers: Offer[];
-  onCardOfferHover: (id: string) => void;
-  onCardOfferLeave: () => void;
+  onCardOfferHover?: (id: string) => void;
+  onCardOfferLeave?: () => void;
 }
 
 function CardList({offers, onCardOfferHover, onCardOfferLeave}: PlaceCardProps): JSX.Element {
@@ -15,11 +15,7 @@ function CardList({offers, onCardOfferHover, onCardOfferLeave}: PlaceCardProps):
         offers.map((offer) => (
           <PlaceCard
             key={offer.id}
-            title={offer.title}
-            type={offer.type}
-            price={offer.price}
-            image={offer.images[0]}
-            id={offer.id}
+            offer={offer}
             onCardOfferHover={onCardOfferHover}
             onCardOfferLeave={onCardOfferLeave}
           />
