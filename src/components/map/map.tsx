@@ -52,6 +52,10 @@ function Map({city, offers, selectedOfferId}: MapProps) {
       map.fitBounds(polyline.getBounds(), {maxZoom: 12});
       polylineLayer.clearLayers();
 
+      return () => {
+        map.removeLayer(markerLayer);
+      };
+
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, offers, selectedOfferId]);

@@ -16,7 +16,7 @@ type InitialState = {
 const initialState: InitialState = {
   city: locations[0],
   offers: offers,
-  offersByCity: [],
+  offersByCity: offers.filter((offer) => offer.city.name === locations[0]),
 };
 
 export const reducer = createReducer(initialState, (builder) => {

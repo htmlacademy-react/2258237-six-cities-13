@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
 
 import { Offer } from '../../types/offer';
 
@@ -12,11 +13,9 @@ import { locations } from '../../mocks/locations';
 type MainPageProps = {
   userLogin: string;
   favoriteHotelsCount: number;
-  currentCityName: string;
-  offers: Offer[];
 }
 
-function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: MainPageProps): JSX.Element {
+function MainPage({userLogin, favoriteHotelsCount}: MainPageProps): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
 
   const handleOfferCardHover = (id: string): void => {
@@ -26,6 +25,9 @@ function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: Mai
   const handleOfferCardLeave = (): void => {
     setSelectedOfferId('');
   };
+
+  const offers: Offer[] = useAppSelector((store) => store.offersByCity);
+  const city = useAppSelector((store) => store.city);
 
   return (
     <div className="page page--gray page--main">
@@ -70,7 +72,7 @@ function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: Mai
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {currentCityName}</b>
+              <b className="places__found">{offers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by{' '}</span>
                 <span className="places__sorting-type" tabIndex={0}>

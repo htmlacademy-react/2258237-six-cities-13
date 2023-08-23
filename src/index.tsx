@@ -20,7 +20,6 @@ root.render(
       <App
         userLogin={BASEDATA.userLogin}
         favoriteHotelsCount={BASEDATA.favoriteHotelsCount}
-        currentOffersInCity={BASEDATA.currentOffersInCity}
         currentCityName={BASEDATA.currentCityName}
         offers={offers}
       />
