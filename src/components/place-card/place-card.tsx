@@ -6,12 +6,13 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {
   offer: Offer;
+  layout: 'main' | 'offer';
   onCardOfferHover?: (id: string) => void;
   onCardOfferLeave?: () => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {offer, onCardOfferHover, onCardOfferLeave} = props;
+  const {offer, layout, onCardOfferHover, onCardOfferLeave} = props;
 
 
   const handleCardOfferHover = (): void => {
@@ -28,7 +29,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
   return (
     <article
-      className="cities__card place-card"
+      className={`${layout === 'main' ? 'cities__card' : 'near-places__card'} place-card`}
       onMouseEnter={handleCardOfferHover}
       onMouseLeave={handleCardOfferLeave}
     >
@@ -38,7 +39,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div>}
 
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${layout === 'main' ? 'cities__image-wrapper' : 'near-places__image-wrapper'}
+      place-card__image-wrapper`}
+      >
         <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"

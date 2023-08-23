@@ -15,11 +15,10 @@ import PrivateRoute from '../private-route/private-route';
 type AppScreenProps = {
   userLogin: string;
   favoriteHotelsCount: number;
-  currentCityName: string;
   offers: Offer[];
 }
 
-function App({userLogin, favoriteHotelsCount, currentCityName, offers}: AppScreenProps): JSX.Element {
+function App({userLogin, favoriteHotelsCount, offers}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -31,8 +30,6 @@ function App({userLogin, favoriteHotelsCount, currentCityName, offers}: AppScree
               <MainPage
                 userLogin={userLogin}
                 favoriteHotelsCount={favoriteHotelsCount}
-                currentCityName={currentCityName}
-                offers={offers}
               />
             }
           />

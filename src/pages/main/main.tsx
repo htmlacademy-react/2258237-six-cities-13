@@ -101,18 +101,18 @@ function MainPage({userLogin, favoriteHotelsCount}: MainPageProps): JSX.Element 
               </form>
               <CardList
                 offers={offers}
+                layout='main'
                 onCardOfferHover={handleOfferCardHover}
                 onCardOfferLeave={handleOfferCardLeave}
               />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  city={offers[0].city}
-                  offers={offers}
-                  selectedOfferId={selectedOfferId}
-                />
-              </section>
+              <Map
+                city={offers[0].city}
+                offers={offers}
+                selectedOfferId={selectedOfferId}
+                layout='main'
+              />
             </div>
           </div>
         </div>

@@ -195,26 +195,24 @@ function OfferPage({offers}: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map">
-            <Map
-              city={offer.city}
-              offers={[offer].concat(nearOffers)}
-              selectedOfferId={offer.id}
-            />
-          </section>
+          <Map
+            city={offer.city}
+            offers={[offer].concat(nearOffers)}
+            selectedOfferId={offer.id}
+            layout='offer'
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <div className="near-places__list places__list">
-              {
-                <CardList
-                  offers={nearOffers}
-                />
-              }
-            </div>
+            {
+              <CardList
+                offers={nearOffers}
+                layout='offer'
+              />
+            }
           </section>
         </div>
       </main>
