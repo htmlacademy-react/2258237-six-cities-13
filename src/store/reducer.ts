@@ -6,17 +6,18 @@ import { offers } from '../mocks/offers';
 import { locations } from '../mocks/locations';
 
 import { Offer } from '../types/offer';
+import { Cities } from '../mocks/locations';
 
 type InitialState = {
-  city: string;
+  city: Cities;
   offers: Offer[];
   offersByCity: Offer[];
 }
 
 const initialState: InitialState = {
-  city: locations[0],
+  city: Array.from(locations)[0],
   offers: offers,
-  offersByCity: offers.filter((offer) => offer.city.name === locations[0]),
+  offersByCity: offers.filter((offer) => offer.city.name === Array.from(locations)[0]),
 };
 
 export const reducer = createReducer(initialState, (builder) => {

@@ -21,7 +21,7 @@ function LocationList({locations}: LocationListProps) {
       <ul className="locations__list tabs__list">
 
         {
-          locations.map((location) => (
+          Array.from(locations).map((location) => (
             <li className="locations__item" key={location}>
               <LocationItem location={location} onLocationClick={handleLocationClick} />
             </li>
