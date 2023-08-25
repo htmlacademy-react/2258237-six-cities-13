@@ -50,7 +50,7 @@ function Map({city, offers, selectedOfferId, layout}: MapProps) {
       });
 
       const polyline = L.polyline(latLngs).addTo(polylineLayer);
-      map.fitBounds(polyline.getBounds(), {maxZoom: 12});
+      map.fitBounds(polyline.getBounds(), {maxZoom: city.location.zoom});
       polylineLayer.clearLayers();
 
       return () => {

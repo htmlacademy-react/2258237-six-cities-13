@@ -1,4 +1,4 @@
-export type CityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dussledorf';
+export type CityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';
 
 export const locations = new Set<CityName>([
   'Paris',
@@ -6,5 +6,5 @@ export const locations = new Set<CityName>([
   'Brussels',
   'Amsterdam',
   'Hamburg',
-  'Dussledorf',
+  'Dusseldorf',
 ]);

@@ -45,7 +45,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
-            src={offer.images[0]}
+            src={offer.previewImage}
             width={260}
             height={200}
             alt="Place image"
