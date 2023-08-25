@@ -4,9 +4,11 @@ import { useAppSelector } from '../../hooks';
 
 import { AppRoute } from '../../config';
 
+import { CityName } from '../../mocks/locations';
+
 type LocationItemProps = {
-  location: string;
-  onLocationClick: (city: string) => void;
+  location: CityName;
+  onLocationClick: (city: CityName) => void;
 }
 
 function LocationItem({location, onLocationClick}: LocationItemProps) {
