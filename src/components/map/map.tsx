@@ -13,6 +13,7 @@ type MapProps = {
   city: City;
   offers: Offer[];
   selectedOfferId: string;
+  layout: 'main' | 'offer';
 }
 
 const getIcon = (icon: string) => new Icon({
@@ -21,7 +22,7 @@ const getIcon = (icon: string) => new Icon({
   iconAnchor: [20, 40],
 });
 
-function Map({city, offers, selectedOfferId}: MapProps) {
+function Map({city, offers, selectedOfferId, layout}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -52,12 +53,19 @@ function Map({city, offers, selectedOfferId}: MapProps) {
       map.fitBounds(polyline.getBounds(), {maxZoom: 12});
       polylineLayer.clearLayers();
 
+      return () => {
+        map.removeLayer(markerLayer);
+      };
+
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, offers, selectedOfferId]);
 
   return (
-    <div style={{height: '100%'}} ref={mapRef} />
+    <section
+      className={`${layout === 'main' ? 'cities__map' : 'offer__map'} map`}
+      ref={mapRef}
+    />
   );
 }
 

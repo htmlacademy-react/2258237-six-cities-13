@@ -1,19 +1,21 @@
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
 
 import { Offer } from '../../types/offer';
 
 import Map from '../../components/map/map';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
+import LocationList from '../../components/location-list/location-list';
+
+import { locations } from '../../mocks/locations';
 
 type MainPageProps = {
   userLogin: string;
   favoriteHotelsCount: number;
-  currentCityName: string;
-  offers: Offer[];
 }
 
-function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: MainPageProps): JSX.Element {
+function MainPage({userLogin, favoriteHotelsCount}: MainPageProps): JSX.Element {
   const [selectedOfferId, setSelectedOfferId] = useState('');
 
   const handleOfferCardHover = (id: string): void => {
@@ -23,6 +25,9 @@ function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: Mai
   const handleOfferCardLeave = (): void => {
     setSelectedOfferId('');
   };
+
+  const offers: Offer[] = useAppSelector((store) => store.offersByCity);
+  const city = useAppSelector((store) => store.city);
 
   return (
     <div className="page page--gray page--main">
@@ -59,46 +64,15 @@ function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: Mai
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          {
+            <LocationList locations={locations}/>
+          }
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {currentCityName}</b>
+              <b className="places__found">{offers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by{' '}</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -127,18 +101,18 @@ function MainPage({userLogin, favoriteHotelsCount, currentCityName, offers}: Mai
               </form>
               <CardList
                 offers={offers}
+                layout='main'
                 onCardOfferHover={handleOfferCardHover}
                 onCardOfferLeave={handleOfferCardLeave}
               />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  city={offers[0].city}
-                  offers={offers}
-                  selectedOfferId={selectedOfferId}
-                />
-              </section>
+              <Map
+                city={offers[0].city}
+                offers={offers}
+                selectedOfferId={selectedOfferId}
+                layout='main'
+              />
             </div>
           </div>
         </div>

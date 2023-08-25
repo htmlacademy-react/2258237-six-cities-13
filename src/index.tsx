@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+
+import { store } from './store/index.ts';
 
 import App from './components/app/app';
 
@@ -13,12 +16,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      userLogin={BASEDATA.userLogin}
-      favoriteHotelsCount={BASEDATA.favoriteHotelsCount}
-      currentOffersInCity={BASEDATA.currentOffersInCity}
-      currentCityName={BASEDATA.currentCityName}
-      offers={offers}
-    />
+    <Provider store={store}>
+      <App
+        userLogin={BASEDATA.userLogin}
+        favoriteHotelsCount={BASEDATA.favoriteHotelsCount}
+        offers={offers}
+      />
+    </Provider>
   </React.StrictMode>
 );

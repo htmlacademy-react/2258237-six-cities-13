@@ -4,18 +4,22 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {
   offers: Offer[];
+  layout: 'main' | 'offer';
   onCardOfferHover?: (id: string) => void;
   onCardOfferLeave?: () => void;
 }
 
-function CardList({offers, onCardOfferHover, onCardOfferLeave}: PlaceCardProps): JSX.Element {
+function CardList({offers, layout, onCardOfferHover, onCardOfferLeave}: PlaceCardProps): JSX.Element {
+  const containerClass = `${layout === 'main' ? 'cities__places-list tabs__content' : 'near-places__list'} places__list`;
+
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={containerClass}>
       {
         offers.map((offer) => (
           <PlaceCard
             key={offer.id}
             offer={offer}
+            layout={layout}
             onCardOfferHover={onCardOfferHover}
             onCardOfferLeave={onCardOfferLeave}
           />
