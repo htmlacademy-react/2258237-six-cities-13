@@ -64,9 +64,7 @@ function MainPage({userLogin, favoriteHotelsCount}: MainPageProps): JSX.Element 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          {
-            <LocationList locations={locations}/>
-          }
+          <LocationList locations={locations}/>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
