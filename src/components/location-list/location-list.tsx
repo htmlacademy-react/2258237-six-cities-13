@@ -7,7 +7,7 @@ import { CityName } from '../../mocks/locations';
 
 
 type LocationListProps = {
-  locations: CityName[];
+  locations: Set<CityName>;
 }
 
 function LocationList({locations}: LocationListProps) {

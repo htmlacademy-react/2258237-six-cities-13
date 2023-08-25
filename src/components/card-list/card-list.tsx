@@ -10,10 +10,12 @@ type PlaceCardProps = {
 }
 
 function CardList({offers, layout, onCardOfferHover, onCardOfferLeave}: PlaceCardProps): JSX.Element {
-  const containerClass = `${layout === 'main' ? 'cities__places-list tabs__content' : 'near-places__list'} places__list`;
+  const containerClass = layout === 'main'
+    ? 'cities__places-list tabs__content'
+    : 'near-places__list';
 
   return (
-    <div className={containerClass}>
+    <div className={`${containerClass} places__list`}>
       {
         offers.map((offer) => (
           <PlaceCard

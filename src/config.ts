@@ -1,3 +1,5 @@
+import { SortingOptions } from './types/sorting';
+
 export const BASEDATA = {
   userLogin: 'Oliver.conner@gmail.com',
   favoriteHotelsCount: 3,
@@ -29,3 +31,10 @@ export const COPYRIGHT =
 export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_CURRENT = './img/pin-active.svg';
+
+export const SORT_OPTIONS: SortingOptions[] = [
+  { type: 'popular', title: 'Popular'},
+  { type: 'priceRaise', title: 'Price: low to high'},
+  { type: 'priceFall', title: 'Price: hign to low'},
+  { type: 'top', title: 'Top rated first'},
+];

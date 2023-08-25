@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks';
-
 import { AppRoute } from '../../config';
 
 import { CityName } from '../../mocks/locations';
+
 
 type LocationItemProps = {
   location: CityName;
