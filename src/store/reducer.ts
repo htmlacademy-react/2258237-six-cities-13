@@ -24,7 +24,7 @@ const initialState: InitialState = {
   offers: [],
   offersByCity: [],
   currentSortingType: SORT_OPTIONS[0].type,
-  isOffersDataLoading: false,
+  isOffersDataLoading: true,
 };
 
 

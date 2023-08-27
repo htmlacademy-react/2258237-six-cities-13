@@ -1,7 +1,9 @@
+import styles from './loader.module.css';
+
 
 function Loader(): JSX.Element {
   return (
-    <h2>Loading...</h2>
+    <span className={styles.loader}></span>
   );
 }
 
