@@ -1,11 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { changeActiveCity, changeActiveOffers, sortOffers } from './action';
+import { changeActiveCity, changeActiveOffers, loadOffers, sortOffers, setOffersDataLoading } from './action';
 
 import { Offer } from '../types/offer';
 import { SortingType } from '../types/sorting';
 
-import { offers } from '../mocks/offers';
 import { locations } from '../mocks/locations';
 import { CityName } from '../mocks/locations';
 
@@ -17,13 +16,15 @@ type InitialState = {
   offers: Offer[];
   offersByCity: Offer[];
   currentSortingType: SortingType;
+  isOffersDataLoading: boolean;
 }
 
 const initialState: InitialState = {
   city: Array.from(locations)[0],
-  offers: offers,
-  offersByCity: offers.filter((offer) => offer.city.name === Array.from(locations)[0]),
+  offers: [],
+  offersByCity: [],
   currentSortingType: SORT_OPTIONS[0].type,
+  isOffersDataLoading: true,
 };
 
 
@@ -53,5 +54,12 @@ export const reducer = createReducer(initialState, (builder) => {
           state.offersByCity = state.offers.filter((offer) => offer.city.name === state.city);
           break;
       }
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.offersByCity = state.offers.filter((offer) => offer.city.name === state.city);
+    })
+    .addCase(setOffersDataLoading, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });

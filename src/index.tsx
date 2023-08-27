@@ -6,9 +6,11 @@ import { store } from './store/index.ts';
 
 import App from './components/app/app';
 
-import { offers } from './mocks/offers.ts';
-
 import { BASEDATA } from './config.ts';
+import { fetchOfferAction } from './store/api-action.ts';
+
+
+store.dispatch(fetchOfferAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +22,6 @@ root.render(
       <App
         userLogin={BASEDATA.userLogin}
         favoriteHotelsCount={BASEDATA.favoriteHotelsCount}
-        offers={offers}
       />
     </Provider>
   </React.StrictMode>

@@ -38,3 +38,7 @@ export const SORT_OPTIONS: SortingOptions[] = [
   { type: 'priceFall', title: 'Price: hign to low'},
   { type: 'top', title: 'Top rated first'},
 ];
+
+export enum APIRoute {
+  Offers = '/offers'
+}

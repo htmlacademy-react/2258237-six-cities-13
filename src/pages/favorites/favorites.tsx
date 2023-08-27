@@ -2,10 +2,8 @@ import { Offer } from '../../types/offer';
 
 import FavoriteCityCard from '../../components/favorite-city-card/favorite-city-card';
 import Logo from '../../components/logo/logo';
+import { useAppSelector } from '../../hooks';
 
-type FavoritePageProps = {
-  offers: Offer[];
-}
 
 type FavoriteCityOffers = {
   city: string;
@@ -13,7 +11,9 @@ type FavoriteCityOffers = {
 }
 
 
-function FavoritePage({offers}: FavoritePageProps): JSX.Element {
+function FavoritePage(): JSX.Element {
+  const offers: Offer[] = useAppSelector((store) => store.offers);
+
   const favoriteCitiesOffers: FavoriteCityOffers[] = [];
 
   const favoriteCities: string[] = offers.reduce((acc: string[], item: Offer) => {

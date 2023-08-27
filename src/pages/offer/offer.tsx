@@ -10,13 +10,13 @@ import Logo from '../../components/logo/logo';
 import { Offer } from '../../types/offer';
 
 import { reviews } from '../../mocks/reviews';
+import { useAppSelector } from '../../hooks';
 
-type OfferPageProps = {
-  offers: Offer[];
-}
 
-function OfferPage({offers}: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const {id} = useParams();
+
+  const offers: Offer[] = useAppSelector((store) => store.offers);
 
   const offer = offers.find((current) => current.id === id);
 
