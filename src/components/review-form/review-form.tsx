@@ -1,6 +1,9 @@
-import { useState, ChangeEvent, Fragment } from 'react';
+import { useState, ChangeEvent, Fragment, FormEvent } from 'react';
 
 import { COUNT_OF_SYMBOLS_REVIEW } from '../../config';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../config';
+import { postNewCommentAction } from '../../store/api-action';
 
 type CommentHandler = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
@@ -23,20 +26,52 @@ const ratingMap = [
   }
 ];
 
-function ReviewForm() {
+type ReviewFormProps = {
+  id: string;
+};
+
+function ReviewForm({id}: ReviewFormProps) {
+  const dispatch = useAppDispatch();
+
   const [comment, setComment] = useState({rating: '-1', review: ''});
+
+  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
 
   function handleCommentChange({ target }: CommentHandler) {
     setComment({ ...comment, [target.name]: target.value });
   }
 
   function canSubmit () {
-    return comment.review.length > COUNT_OF_SYMBOLS_REVIEW;
+    return comment.review.length < COUNT_OF_SYMBOLS_REVIEW;
   }
 
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
+    return '';
+  }
+
+  const handleReviewFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    try {
+      dispatch(postNewCommentAction({
+        offerId: id,
+        comment: comment.review,
+        rating: Number(comment.rating),
+      }));
+      setComment({
+        rating: '0',
+        review: '',
+      });
+      evt.currentTarget.reset();
+    } catch { /* empty */ }
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleReviewFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>

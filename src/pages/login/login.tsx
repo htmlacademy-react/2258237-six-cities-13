@@ -1,16 +1,21 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, MouseEventHandler, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { loginAction } from '../../store/api-action';
 import { AppRoute } from '../../config';
+import { changeActiveCity } from '../../store/action';
 
 import Logo from '../../components/logo/logo';
+import { locations } from '../../mocks/locations';
 
 import styles from './login.module.css';
 
 
 function LoginPage(): JSX.Element {
+  const city = [...locations][Math.floor(Math.random() * [...locations].length)];
+
   const regexLogin = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z]/;
   const regexPassword = /^(?=.*\d)(?=.*[a-z]).*$/;
 
@@ -22,7 +27,6 @@ function LoginPage(): JSX.Element {
 
   const [isCorrectLogin, setIsCorrectLogin] = useState(true);
   const [isCorrectPassword, setIsCorrectPassword] = useState(true);
-
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -55,6 +59,10 @@ function LoginPage(): JSX.Element {
 
       navigate(AppRoute.Main);
     }
+  };
+
+  const handleButtonClick: MouseEventHandler<HTMLAnchorElement> = () => {
+    dispatch(changeActiveCity({city}));
   };
 
 
@@ -117,9 +125,11 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleButtonClick}>
+                <span>
+                  {city}
+                </span>
+              </Link>
             </div>
           </section>
         </div>
