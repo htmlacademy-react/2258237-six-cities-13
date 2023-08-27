@@ -1,12 +1,5 @@
 import { SortingOptions } from './types/sorting';
 
-export const BASEDATA = {
-  userLogin: 'Oliver.conner@gmail.com',
-  favoriteHotelsCount: 3,
-  currentOffersInCity: 3,
-  currentCityName: 'Amsterdam',
-} as const;
-
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -40,5 +33,8 @@ export const SORT_OPTIONS: SortingOptions[] = [
 ];
 
 export enum APIRoute {
-  Offers = '/offers'
+  Offers = '/offers',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
 }

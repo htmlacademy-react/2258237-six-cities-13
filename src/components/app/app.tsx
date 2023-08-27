@@ -12,12 +12,8 @@ import Loader from '../loader/loader';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 
-type AppScreenProps = {
-  userLogin: string;
-  favoriteHotelsCount: number;
-}
 
-function App({userLogin, favoriteHotelsCount}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
 
   if (isOffersDataLoading) {
@@ -34,10 +30,7 @@ function App({userLogin, favoriteHotelsCount}: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.Main}
             element={
-              <MainPage
-                userLogin={userLogin}
-                favoriteHotelsCount={favoriteHotelsCount}
-              />
+              <MainPage />
             }
           />
 

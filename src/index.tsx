@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
 import { store } from './store/index.ts';
 
 import App from './components/app/app';
 
-import { BASEDATA } from './config.ts';
 import { fetchOfferAction } from './store/api-action.ts';
+import { checkAuthAction } from './store/api-action.ts';
 
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchOfferAction());
 
 const root = ReactDOM.createRoot(
@@ -19,10 +22,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        userLogin={BASEDATA.userLogin}
-        favoriteHotelsCount={BASEDATA.favoriteHotelsCount}
-      />
+      <ToastContainer />
+      <App />
     </Provider>
   </React.StrictMode>
 );
