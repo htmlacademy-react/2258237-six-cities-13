@@ -11,6 +11,7 @@ function Auth() {
   const dispatch = useAppDispatch();
 
   const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const userEmail = useAppSelector((store) => store.userData.email);
 
   if (authorizationStatus === AuthorizationStatus.NoAuth) {
     return (
@@ -37,7 +38,7 @@ function Auth() {
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__user-name user__name">
-                {'userLogin'}
+                {userEmail}
               </span>
               <span className="header__favorite-count">
                 {'favoriteHotelsCount'}
