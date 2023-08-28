@@ -9,12 +9,14 @@ import OfferPage from '../../pages/offer/offer';
 import Page404 from '../../pages/404/404';
 import Loader from '../loader/loader';
 
-import PrivateRoute from '../private-route/private-route';
+import { PrivateRouteFavorites } from '../private-route/private-route';
+import { PrivateRouteLogin } from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 
 
 function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
+  const authorizationStatus = useAppSelector((store) => store.authorizationStatus) as AuthorizationStatus;
 
   if (isOffersDataLoading) {
     return (
@@ -37,17 +39,23 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+              <PrivateRouteFavorites
+                authorizationStatus={authorizationStatus}
               >
                 <FavoritePage />
-              </PrivateRoute>
+              </PrivateRouteFavorites>
             }
           />
 
           <Route
             path={AppRoute.Login}
-            element={<LoginPage />}
+            element={
+              <PrivateRouteLogin
+                authorizationStatus={authorizationStatus}
+              >
+                <LoginPage />
+              </PrivateRouteLogin>
+            }
           />
 
           <Route path={AppRoute.Offer}>
