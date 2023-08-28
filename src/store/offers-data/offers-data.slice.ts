@@ -5,7 +5,7 @@ import { SORT_OPTIONS, SliceNames } from '../../config';
 import { OfferData } from '../../types/offer';
 import { SortingType } from '../../types/sorting';
 import { sortPriceUp, sortPriceDown, sortRate } from '../../ustils';
-import { fetchOfferAction, fetchOfferDataAction, fetchOfferReviewsAction, fetchOffersNearbyAction, postNewCommentAction } from '../api-action';
+import { favoritesOfferAction, fetchOfferAction, fetchOfferDataAction, fetchOfferReviewsAction, fetchOffersNearbyAction, getFavoriteOffersAction, postNewCommentAction } from '../api-action';
 
 const initialState: OffersData = {
   city: Array.from(locations)[0],
@@ -16,6 +16,7 @@ const initialState: OffersData = {
   isOffersDataLoading: true,
   offersNear: [],
   offerReviews: [],
+  favoriteOffers: [],
 };
 
 
@@ -47,6 +48,9 @@ export const offersData = createSlice({
           state.offersByCity = state.offers.filter((offer) => offer.city.name === state.city);
           break;
       }
+    },
+    setFavoriteOffers: (state) => {
+      state.offersByCity.map((offer) => offer.isFavorite === false);
     }
   },
   extraReducers(builder) {
@@ -74,8 +78,29 @@ export const offersData = createSlice({
       })
       .addCase(postNewCommentAction.fulfilled, (state, action) => {
         state.offerReviews.push(action.payload);
+      })
+      .addCase(getFavoriteOffersAction.fulfilled, (state, action) => {
+        state.favoriteOffers = action.payload;
+      })
+      .addCase(favoritesOfferAction.fulfilled, (state, action) => {
+        if (action.meta.arg.status === 1) {
+          state.favoriteOffers.push(action.payload);
+          state.offersByCity.map((offer) => {
+            if (offer.id === action.payload.id) {
+              offer.isFavorite = true;
+            }
+          });
+        } else {
+          state.offersByCity.map((offer) => {
+            if (offer.id === action.payload.id) {
+              offer.isFavorite = false;
+            }
+          });
+          const index = state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id);
+          state.favoriteOffers.splice(index, 1);
+        }
       });
   }
 });
 
-export const { changeActiveCity, changeActiveOffers, sortOffers } = offersData.actions;
+export const { changeActiveCity, changeActiveOffers, sortOffers, setFavoriteOffers } = offersData.actions;

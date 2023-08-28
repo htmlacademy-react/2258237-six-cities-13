@@ -51,3 +51,8 @@ export type OfferData = {
   images: [string];
   maxAdults: number;
 }
+
+export type Favorite = {
+  offerId: string;
+  status: number;
+}

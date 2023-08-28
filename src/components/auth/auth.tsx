@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../hooks';
 
 import { AuthorizationStatus, AppRoute } from '../../config';
 import { getAuthorizationStatus, getUserData } from '../../store/auth-process/auth-process.selectors';
+import { getFavoriteOffers } from '../../store/offers-data/offers-data.selectors';
 
 
 function Auth() {
@@ -13,6 +14,7 @@ function Auth() {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userEmail = useAppSelector(getUserData).email;
+  const test = useAppSelector(getFavoriteOffers);
 
   if (authorizationStatus === AuthorizationStatus.NoAuth) {
     return (
@@ -42,7 +44,7 @@ function Auth() {
                 {userEmail}
               </span>
               <span className="header__favorite-count">
-                {'favoriteHotelsCount'}
+                {test.length}
               </span>
             </a>
           </li>

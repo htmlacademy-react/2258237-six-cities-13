@@ -25,4 +25,5 @@ export type OffersData = {
   isOffersDataLoading: boolean;
   offersNear: Offer[];
   offerReviews: Review[];
+  favoriteOffers: (Offer | OfferData)[];
 }

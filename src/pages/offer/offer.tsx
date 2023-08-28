@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import Page404 from '../404/404';
 import ReviewList from '../../components/review-list/review-list';
@@ -9,20 +9,26 @@ import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferDataAction, fetchOfferReviewsAction, fetchOffersNearbyAction } from '../../store/api-action';
+import { favoritesOfferAction, fetchOfferDataAction, fetchOfferReviewsAction, fetchOffersNearbyAction } from '../../store/api-action';
 import Auth from '../../components/auth/auth';
 import { getOfferData, getOfferReviews, getOffersNear } from '../../store/offers-data/offers-data.selectors';
+import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
+import { AuthorizationStatus } from '../../config';
+import { AppRoute } from '../../config';
 
 
 function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {id} = useParams();
 
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offer = useAppSelector(getOfferData);
   const reviews = useAppSelector(getOfferReviews);
   const nearOffers = useAppSelector(getOffersNear);
 
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
 
   useEffect(() => {
     const needToGetData = offer.id !== id || Object.keys(offer).length === 0;
@@ -36,10 +42,22 @@ function OfferPage(): JSX.Element {
   }, [offer, id, dispatch]);
 
 
+  const handleFavoriteClick = (): void => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(favoritesOfferAction({
+        offerId: offer.id,
+        status: Number(!isFavorite)
+      }));
+      setIsFavorite(!isFavorite);
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
+
+
   if (Object.keys(offer).length === 0 || !id) {
     return <Page404 />;
   }
-
 
   return (
     <div className="page">
@@ -80,7 +98,11 @@ function OfferPage(): JSX.Element {
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button
+                  className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`}
+                  type="button"
+                  onClick={handleFavoriteClick}
+                >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>

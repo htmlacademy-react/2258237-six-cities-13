@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { AppRoute } from '../../config';
-
 import { Offer } from '../../types/offer';
+import { AuthorizationStatus } from '../../config';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
+import { favoritesOfferAction } from '../../store/api-action';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -14,6 +20,11 @@ type PlaceCardProps = {
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const {offer, layout, onCardOfferHover, onCardOfferLeave} = props;
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
+
 
   const handleCardOfferHover = (): void => {
     if (onCardOfferHover) {
@@ -24,6 +35,18 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   const handleCardOfferLeave = (): void => {
     if (onCardOfferLeave) {
       return onCardOfferLeave();
+    }
+  };
+
+  const handleFavoriteClick = (): void => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(favoritesOfferAction({
+        offerId: offer.id,
+        status: Number(!isFavorite)
+      }));
+      setIsFavorite(!isFavorite);
+    } else {
+      navigate(AppRoute.Login);
     }
   };
 
@@ -60,8 +83,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
-            className="place-card__bookmark-button button"
+            className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active button' : ''}`}
             type="button"
+            onClick={handleFavoriteClick}
           >
             <svg
               className="place-card__bookmark-icon"
