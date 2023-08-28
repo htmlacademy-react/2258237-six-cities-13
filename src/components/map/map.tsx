@@ -5,13 +5,13 @@ import L, { Icon, Marker, layerGroup } from 'leaflet';
 import useMap from '../../hooks/useMap';
 
 import { City } from '../../types/city';
-import { Offer } from '../../types/offer';
+import { Offer, OfferData } from '../../types/offer';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../config';
 
 type MapProps = {
   city: City;
-  offers: Offer[];
+  offers: (Offer | OfferData)[];
   selectedOfferId: string;
   layout: 'main' | 'offer';
 }

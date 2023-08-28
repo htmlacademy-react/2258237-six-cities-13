@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Page404 from '../404/404';
 import ReviewList from '../../components/review-list/review-list';
@@ -7,24 +8,35 @@ import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
 
-import { Offer } from '../../types/offer';
-
-import { reviews } from '../../mocks/reviews';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOfferDataAction } from '../../store/api-action';
+import Auth from '../../components/auth/auth';
 
 
 function OfferPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const {id} = useParams();
 
-  const offers: Offer[] = useAppSelector((store) => store.offers);
+  const offer = useAppSelector((store) => store.offerData);
+  const reviews = useAppSelector((store) => store.offerReviews);
+  const nearOffers = useAppSelector((store) => store.offersNear);
 
-  const offer = offers.find((current) => current.id === id);
 
-  const nearOffers = offers.filter((item) => item.id !== id);
+  useEffect(() => {
+    const needToGetData = offer.id !== id || Object.keys(offer).length === 0;
 
-  if (!offer) {
+    if (needToGetData && id) {
+      dispatch(fetchOfferDataAction(id));
+    }
+
+  }, [offer, id, dispatch]);
+
+
+  if (Object.keys(offer).length === 0 || !id) {
     return <Page404 />;
   }
+
 
   return (
     <div className="page">
@@ -32,27 +44,7 @@ function OfferPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Auth />
           </div>
         </div>
       </header>
@@ -60,48 +52,17 @@ function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offer.images[0]}
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
+              {
+                offer.images.map((img) => (
+                  <div key={img} className="offer__image-wrapper">
+                    <img
+                      className="offer__image"
+                      src={img}
+                      alt="Photo studio"
+                    />
+                  </div>
+                ))
+              }
             </div>
           </div>
           <div className="offer__container container">
@@ -146,16 +107,9 @@ function OfferPage(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What{'\''}s inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">Wi-Fi</li>
-                  <li className="offer__inside-item">Washing machine</li>
-                  <li className="offer__inside-item">Towels</li>
-                  <li className="offer__inside-item">Heating</li>
-                  <li className="offer__inside-item">Coffee machine</li>
-                  <li className="offer__inside-item">Baby seat</li>
-                  <li className="offer__inside-item">Kitchen</li>
-                  <li className="offer__inside-item">Dishwasher</li>
-                  <li className="offer__inside-item">Cabel TV</li>
-                  <li className="offer__inside-item">Fridge</li>
+                  {
+                    offer.goods.map((good) => <li key={good} className="offer__inside-item">{good}</li>)
+                  }
                 </ul>
               </div>
               <div className="offer__host">
@@ -190,14 +144,14 @@ function OfferPage(): JSX.Element {
                   <ReviewList reviews={reviews}/>
                 }
                 {
-                  <ReviewForm />
+                  <ReviewForm id={id}/>
                 }
               </section>
             </div>
           </div>
           <Map
             city={offer.city}
-            offers={[offer].concat(nearOffers)}
+            offers={[...nearOffers.slice(0,3), offer]}
             selectedOfferId={offer.id}
             layout='offer'
           />
@@ -209,7 +163,7 @@ function OfferPage(): JSX.Element {
             </h2>
             {
               <CardList
-                offers={nearOffers}
+                offers={nearOffers.slice(0,3)}
                 layout='offer'
               />
             }
