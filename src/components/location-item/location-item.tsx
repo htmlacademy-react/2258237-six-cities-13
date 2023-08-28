@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { AppRoute } from '../../config';
 
 import { CityName } from '../../mocks/locations';
+import { getLocation } from '../../store/offers-data/offers-data.selectors';
 
 
 type LocationItemProps = {
@@ -12,7 +13,7 @@ type LocationItemProps = {
 }
 
 function LocationItem({location, onLocationClick}: LocationItemProps) {
-  const currentCity = useAppSelector((store) => store.city);
+  const currentCity = useAppSelector(getLocation);
 
   const handleLocationClick = () => onLocationClick(location);
 

@@ -3,6 +3,7 @@ import { Offer } from '../../types/offer';
 import FavoriteCityCard from '../../components/favorite-city-card/favorite-city-card';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/offers-data/offers-data.selectors';
 
 
 type FavoriteCityOffers = {
@@ -12,7 +13,7 @@ type FavoriteCityOffers = {
 
 
 function FavoritePage(): JSX.Element {
-  const offers: Offer[] = useAppSelector((store) => store.offers);
+  const offers: Offer[] = useAppSelector(getOffers);
 
   const favoriteCitiesOffers: FavoriteCityOffers[] = [];
 

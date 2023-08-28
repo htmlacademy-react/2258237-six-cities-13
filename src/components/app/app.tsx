@@ -12,11 +12,13 @@ import Loader from '../loader/loader';
 import { PrivateRouteFavorites } from '../private-route/private-route';
 import { PrivateRouteLogin } from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
+import { getStatusLoading } from '../../store/offers-data/offers-data.selectors';
+import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
 
 
 function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus) as AuthorizationStatus;
+  const isOffersDataLoading = useAppSelector(getStatusLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus) as AuthorizationStatus;
 
   if (isOffersDataLoading) {
     return (
