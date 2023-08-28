@@ -12,6 +12,7 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import Auth from '../../components/auth/auth';
 
 import { locations } from '../../mocks/locations';
+import { getLocation, getOffersByCity } from '../../store/offers-data/offers-data.selectors';
 
 
 function MainPage(): JSX.Element {
@@ -25,8 +26,8 @@ function MainPage(): JSX.Element {
     setSelectedOfferId('');
   };
 
-  const offers: Offer[] = useAppSelector((store) => store.offersByCity);
-  const city = useAppSelector((store) => store.city);
+  const offers: Offer[] = useAppSelector(getOffersByCity);
+  const city = useAppSelector(getLocation);
 
   const mainSectionClassName = `page__main page__main--index ${offers.length === 0
     ? 'page__main--index-empty'

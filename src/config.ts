@@ -40,3 +40,9 @@ export enum APIRoute {
   Comments = '/comments',
   NearBy = '/nearby',
 }
+
+export enum SliceNames {
+  Map = 'Map',
+  Data = 'Data',
+  Auth = 'Auth',
+}

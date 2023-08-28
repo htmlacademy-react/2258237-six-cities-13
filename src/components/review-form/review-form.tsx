@@ -4,6 +4,7 @@ import { COUNT_OF_SYMBOLS_REVIEW } from '../../config';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../config';
 import { postNewCommentAction } from '../../store/api-action';
+import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
 
 type CommentHandler = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
@@ -35,7 +36,7 @@ function ReviewForm({id}: ReviewFormProps) {
 
   const [comment, setComment] = useState({rating: '-1', review: ''});
 
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   function handleCommentChange({ target }: CommentHandler) {
     setComment({ ...comment, [target.name]: target.value });

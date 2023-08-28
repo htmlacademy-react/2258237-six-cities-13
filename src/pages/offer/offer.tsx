@@ -9,8 +9,9 @@ import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferDataAction } from '../../store/api-action';
+import { fetchOfferDataAction, fetchOfferReviewsAction, fetchOffersNearbyAction } from '../../store/api-action';
 import Auth from '../../components/auth/auth';
+import { getOfferData, getOfferReviews, getOffersNear } from '../../store/offers-data/offers-data.selectors';
 
 
 function OfferPage(): JSX.Element {
@@ -18,9 +19,9 @@ function OfferPage(): JSX.Element {
 
   const {id} = useParams();
 
-  const offer = useAppSelector((store) => store.offerData);
-  const reviews = useAppSelector((store) => store.offerReviews);
-  const nearOffers = useAppSelector((store) => store.offersNear);
+  const offer = useAppSelector(getOfferData);
+  const reviews = useAppSelector(getOfferReviews);
+  const nearOffers = useAppSelector(getOffersNear);
 
 
   useEffect(() => {
@@ -28,6 +29,8 @@ function OfferPage(): JSX.Element {
 
     if (needToGetData && id) {
       dispatch(fetchOfferDataAction(id));
+      dispatch(fetchOffersNearbyAction(id));
+      dispatch(fetchOfferReviewsAction(id));
     }
 
   }, [offer, id, dispatch]);

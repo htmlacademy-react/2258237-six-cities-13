@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { loginAction } from '../../store/api-action';
 import { AppRoute } from '../../config';
-import { changeActiveCity } from '../../store/action';
+import { changeActiveCity } from '../../store/offers-data/offers-data.slice';
 
 import Logo from '../../components/logo/logo';
 import { locations } from '../../mocks/locations';

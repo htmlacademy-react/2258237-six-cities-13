@@ -1,6 +1,6 @@
 import LocationItem from '../location-item/location-item';
 
-import { changeActiveCity, changeActiveOffers } from '../../store/action';
+import { changeActiveCity, changeActiveOffers } from '../../store/offers-data/offers-data.slice';
 import { useAppDispatch } from '../../hooks';
 
 import { CityName } from '../../mocks/locations';

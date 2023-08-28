@@ -5,13 +5,14 @@ import { logoutAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
 
 import { AuthorizationStatus, AppRoute } from '../../config';
+import { getAuthorizationStatus, getUserData } from '../../store/auth-process/auth-process.selectors';
 
 
 function Auth() {
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
-  const userEmail = useAppSelector((store) => store.userData.email);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getUserData).email;
 
   if (authorizationStatus === AuthorizationStatus.NoAuth) {
     return (
