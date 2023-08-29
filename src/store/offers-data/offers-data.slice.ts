@@ -17,6 +17,7 @@ const initialState: OffersData = {
   offersNear: [],
   offerReviews: [],
   favoriteOffers: [],
+  isFavoritesLoading: false,
 };
 
 
@@ -54,7 +55,7 @@ export const offersData = createSlice({
     },
     clearFavortiteOffers: (state) => {
       state.favoriteOffers = [];
-    }
+    },
   },
   extraReducers(builder) {
     builder
@@ -82,8 +83,12 @@ export const offersData = createSlice({
       .addCase(postNewCommentAction.fulfilled, (state, action) => {
         state.offerReviews.push(action.payload);
       })
+      .addCase(getFavoriteOffersAction.pending, (state) => {
+        state.isOffersDataLoading = true;
+      })
       .addCase(getFavoriteOffersAction.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
+        state.isOffersDataLoading = false;
       })
       .addCase(favoritesOfferAction.fulfilled, (state, action) => {
         if (action.meta.arg.status === 1) {

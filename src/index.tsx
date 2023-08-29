@@ -8,12 +8,6 @@ import { store } from './store/index.ts';
 
 import App from './components/app/app';
 
-import { fetchOfferAction } from './store/api-action.ts';
-import { checkAuthAction } from './store/api-action.ts';
-
-
-// store.dispatch(checkAuthAction());
-// store.dispatch(fetchOfferAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

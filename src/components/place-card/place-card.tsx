@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AppRoute } from '../../config';
@@ -23,7 +22,6 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
 
 
   const handleCardOfferHover = (): void => {
@@ -42,9 +40,8 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(favoritesOfferAction({
         offerId: offer.id,
-        status: Number(!isFavorite)
+        status: Number(!offer.isFavorite)
       }));
-      setIsFavorite(!isFavorite);
     } else {
       navigate(AppRoute.Login);
     }
@@ -83,7 +80,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active button' : ''}`}
+            className={`place-card__bookmark-button button ${offer.isFavorite ? 'place-card__bookmark-button--active button' : ''}`}
             type="button"
             onClick={handleFavoriteClick}
           >

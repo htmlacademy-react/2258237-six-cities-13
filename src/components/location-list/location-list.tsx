@@ -4,6 +4,7 @@ import { changeActiveCity, changeActiveOffers } from '../../store/offers-data/of
 import { useAppDispatch } from '../../hooks';
 
 import { CityName } from '../../mocks/locations';
+import { fetchOfferAction } from '../../store/api-action';
 
 
 type LocationListProps = {
@@ -16,6 +17,7 @@ function LocationList({locations}: LocationListProps) {
   const handleLocationClick = (city: CityName) => {
     dispatch(changeActiveCity({city}));
     dispatch(changeActiveOffers());
+    dispatch(fetchOfferAction());
   };
 
   return (

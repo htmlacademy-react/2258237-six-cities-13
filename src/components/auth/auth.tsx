@@ -1,21 +1,28 @@
+import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
 
-import { logoutAction } from '../../store/api-action';
+import { logoutAction, checkAuthAction, getAuthDataAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
-
 import { AuthorizationStatus, AppRoute } from '../../config';
 import { getAuthorizationStatus, getUserData } from '../../store/auth-process/auth-process.selectors';
 import { getFavoriteOffers } from '../../store/offers-data/offers-data.selectors';
-
 
 function Auth() {
   const dispatch = useAppDispatch();
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const userEmail = useAppSelector(getUserData).email;
   const favoritesOffers = useAppSelector(getFavoriteOffers);
-  console.log(authorizationStatus)
+  const userEmail = useAppSelector(getUserData).email;
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Unknown) {
+      dispatch(checkAuthAction());
+    } else if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(getAuthDataAction({}));
+    }
+  });
+
 
   if (authorizationStatus !== AuthorizationStatus.Auth) {
     return (
@@ -36,9 +43,9 @@ function Auth() {
       <nav className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item user">
-            <a
+            <Link
               className="header__nav-link header__nav-link--profile"
-              href="#"
+              to={AppRoute.Favorites}
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__user-name user__name">
@@ -47,7 +54,7 @@ function Auth() {
               <span className="header__favorite-count">
                 {favoritesOffers.length}
               </span>
-            </a>
+            </Link>
           </li>
           <li className="header__nav-item">
             <Link

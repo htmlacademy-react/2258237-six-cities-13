@@ -15,9 +15,9 @@ import { PrivateRouteLogin } from '../private-route/private-route';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getOffers, getStatusLoading } from '../../store/offers-data/offers-data.selectors';
 import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
-import { fetchOfferAction, getFavoriteOffersAction, loginAction } from '../../store/api-action';
-import { getToken } from '../../services/token';
+import { fetchOfferAction, getFavoriteOffersAction } from '../../store/api-action';
 import { clearFavortiteOffers } from '../../store/offers-data/offers-data.slice';
+import { checkAuthAction } from '../../store/api-action';
 
 
 function App(): JSX.Element {
@@ -26,12 +26,11 @@ function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getStatusLoading);
   const authorizationStatus = useAppSelector(getAuthorizationStatus) as AuthorizationStatus;
   const offers = useAppSelector(getOffers);
-  const token = getToken();
 
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Unknown) {
-      dispatch(loginAction({}));
+      dispatch(checkAuthAction());
     }
   });
 
@@ -48,7 +47,8 @@ function App(): JSX.Element {
       dispatch(clearFavortiteOffers());
     }
 
-  }, [authorizationStatus, dispatch, offers, token]);
+  }, [authorizationStatus, dispatch, offers]);
+
 
   if (isOffersDataLoading) {
     return (

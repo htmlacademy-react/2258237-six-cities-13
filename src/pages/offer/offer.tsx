@@ -39,7 +39,7 @@ function OfferPage(): JSX.Element {
       dispatch(fetchOfferReviewsAction(id));
     }
 
-  }, [offer, id, dispatch]);
+  }, [offer, id, dispatch, isFavorite]);
 
 
   const handleFavoriteClick = (): void => {
