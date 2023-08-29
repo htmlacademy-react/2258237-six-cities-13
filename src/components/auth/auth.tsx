@@ -14,9 +14,10 @@ function Auth() {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userEmail = useAppSelector(getUserData).email;
-  const test = useAppSelector(getFavoriteOffers);
+  const favoritesOffers = useAppSelector(getFavoriteOffers);
+  console.log(authorizationStatus)
 
-  if (authorizationStatus === AuthorizationStatus.NoAuth) {
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
     return (
       <nav className="header__nav">
         <ul className="header__nav-list">
@@ -44,7 +45,7 @@ function Auth() {
                 {userEmail}
               </span>
               <span className="header__favorite-count">
-                {test.length}
+                {favoritesOffers.length}
               </span>
             </a>
           </li>

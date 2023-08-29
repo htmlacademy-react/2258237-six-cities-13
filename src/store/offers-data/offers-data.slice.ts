@@ -51,6 +51,9 @@ export const offersData = createSlice({
     },
     setFavoriteOffers: (state) => {
       state.offersByCity.map((offer) => offer.isFavorite === false);
+    },
+    clearFavortiteOffers: (state) => {
+      state.favoriteOffers = [];
     }
   },
   extraReducers(builder) {
@@ -103,4 +106,4 @@ export const offersData = createSlice({
   }
 });
 
-export const { changeActiveCity, changeActiveOffers, sortOffers, setFavoriteOffers } = offersData.actions;
+export const { changeActiveCity, changeActiveOffers, sortOffers, clearFavortiteOffers } = offersData.actions;

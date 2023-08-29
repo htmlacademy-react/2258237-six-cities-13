@@ -17,15 +17,38 @@ import { getOffers, getStatusLoading } from '../../store/offers-data/offers-data
 import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
 import { fetchOfferAction, getFavoriteOffersAction, loginAction } from '../../store/api-action';
 import { getToken } from '../../services/token';
+import { clearFavortiteOffers } from '../../store/offers-data/offers-data.slice';
 
 
 function App(): JSX.Element {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
   const isOffersDataLoading = useAppSelector(getStatusLoading);
   const authorizationStatus = useAppSelector(getAuthorizationStatus) as AuthorizationStatus;
-  // const offers = useAppSelector(getOffers);
-  // const token = getToken();
+  const offers = useAppSelector(getOffers);
+  const token = getToken();
 
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Unknown) {
+      dispatch(loginAction({}));
+    }
+  });
+
+  useEffect(() => {
+    dispatch(fetchOfferAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(getFavoriteOffersAction());
+    }
+
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      dispatch(clearFavortiteOffers());
+    }
+
+  }, [authorizationStatus, dispatch, offers, token]);
 
   if (isOffersDataLoading) {
     return (
