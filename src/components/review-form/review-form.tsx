@@ -23,7 +23,7 @@ const ratingMap = [
     title: 'badly',
   }, {
     score: '1',
-    title: 'terrible',
+    title: 'terribly',
   }
 ];
 
@@ -43,27 +43,27 @@ function ReviewForm({id}: ReviewFormProps) {
   }
 
   function canSubmit () {
-    return comment.review.length < COUNT_OF_SYMBOLS_REVIEW;
+    return comment.review.length < COUNT_OF_SYMBOLS_REVIEW || comment.rating === '-1' || comment.review.length > 300;
   }
 
   if (authorizationStatus !== AuthorizationStatus.Auth) {
     return '';
   }
 
+
   const handleReviewFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    try {
-      dispatch(postNewCommentAction({
-        offerId: id,
-        comment: comment.review,
-        rating: Number(comment.rating),
-      }));
-      setComment({
-        rating: '0',
-        review: '',
-      });
-      evt.currentTarget.reset();
-    } catch { /* empty */ }
+    dispatch(postNewCommentAction({
+      offerId: id,
+      comment: comment.review,
+      rating: Number(comment.rating),
+      onSuccess: () => {
+        setComment({
+          rating: '0',
+          review: '',
+        });
+      }
+    }));
   };
 
   return (

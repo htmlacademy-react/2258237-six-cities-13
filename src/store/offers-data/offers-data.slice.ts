@@ -67,12 +67,18 @@ export const offersData = createSlice({
         state.offers = action.payload;
         state.offersByCity = state.offers.filter((offer) => offer.city.name === state.city);
       })
+      .addCase(fetchOfferAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
+      })
       .addCase(fetchOfferDataAction.pending, (state) => {
         state.isOffersDataLoading = true;
       })
       .addCase(fetchOfferDataAction.fulfilled, (state, action) => {
         state.isOffersDataLoading = false;
         state.offerData = action.payload;
+      })
+      .addCase(fetchOfferDataAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNear = action.payload;

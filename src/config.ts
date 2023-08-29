@@ -28,7 +28,7 @@ export const URL_MARKER_CURRENT = './img/pin-active.svg';
 export const SORT_OPTIONS: SortingOptions[] = [
   { type: 'popular', title: 'Popular'},
   { type: 'priceRaise', title: 'Price: low to high'},
-  { type: 'priceFall', title: 'Price: hign to low'},
+  { type: 'priceFall', title: 'Price: high to low'},
   { type: 'top', title: 'Top rated first'},
 ];
 
