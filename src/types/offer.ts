@@ -50,4 +50,10 @@ export type OfferData = {
   host: Host;
   images: [string];
   maxAdults: number;
+  previewImage?: string;
+}
+
+export type Favorite = {
+  offerId: string;
+  status: number;
 }

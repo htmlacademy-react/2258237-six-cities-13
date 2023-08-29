@@ -6,6 +6,7 @@ import { Offer, OfferData } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { Comment, Review } from '../types/review';
+import { Favorite } from '../types/offer';
 
 import { APIRoute } from '../config';
 import { dropToken, saveToken } from '../services/token';
@@ -31,6 +32,18 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'checkAuth',
   async (_arg, {extra: api}) => {
     await api.get(APIRoute.Login);
+  },
+);
+
+export const getAuthDataAction = createAsyncThunk<UserData, Partial<AuthData>, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'getAuthData',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    return data;
   }
 );
 
@@ -42,7 +55,6 @@ export const loginAction = createAsyncThunk<UserData, Partial<AuthData>, {
   'login',
   async({login: email, password}, {extra: api}) => {
     const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(data.token);
     saveToken(data.token);
     return data;
   }
@@ -107,6 +119,30 @@ export const postNewCommentAction = createAsyncThunk<Review, Comment, {
   async (param, { extra: api }) => {
     const {offerId, rating, comment} = param;
     const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, {rating, comment});
+    return data;
+  },
+);
+
+export const getFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'getFavoriteOffers',
+  async (_arg, { extra: api }) => {
+    const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
+export const favoritesOfferAction = createAsyncThunk<OfferData, Favorite, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'favoritesOffer',
+  async ({ offerId, status }, { extra: api }) => {
+    const { data } = await api.post<OfferData>(`${APIRoute.Favorite}/${offerId}/${status}`, {});
     return data;
   },
 );

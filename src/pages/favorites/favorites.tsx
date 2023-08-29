@@ -1,28 +1,31 @@
-import { Offer } from '../../types/offer';
+import { Offer, OfferData } from '../../types/offer';
 
 import FavoriteCityCard from '../../components/favorite-city-card/favorite-city-card';
 import Logo from '../../components/logo/logo';
+import Auth from '../../components/auth/auth';
 import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/offers-data/offers-data.selectors';
+import { getFavoriteOffers } from '../../store/offers-data/offers-data.selectors';
+import FavoriteEmptyPage from '../favorite-empty/favorite-empty';
 
 
 type FavoriteCityOffers = {
   city: string;
-  offers: Offer[];
+  offers: (Offer | OfferData)[];
 }
 
 
 function FavoritePage(): JSX.Element {
-  const offers: Offer[] = useAppSelector(getOffers);
+  const offers: (Offer | OfferData)[] = useAppSelector(getFavoriteOffers);
 
   const favoriteCitiesOffers: FavoriteCityOffers[] = [];
 
-  const favoriteCities: string[] = offers.reduce((acc: string[], item: Offer) => {
+  const favoriteCities: string[] = offers.reduce((acc: string[], item: Offer | OfferData) => {
     if (acc.includes(item.city.name)) {
       return acc;
     }
     return [...acc, item.city.name];
   }, []);
+
 
   favoriteCities.map((city: string) => {
     favoriteCitiesOffers.push({
@@ -31,7 +34,8 @@ function FavoritePage(): JSX.Element {
     });
   });
 
-  offers.map((offer: Offer) => {
+
+  offers.map((offer: Offer | OfferData) => {
     if (offer.isFavorite) {
       favoriteCitiesOffers.map((item: FavoriteCityOffers) => {
         if (item.city === offer.city.name) {
@@ -41,33 +45,21 @@ function FavoritePage(): JSX.Element {
     }
   });
 
+
+  if (favoriteCitiesOffers.length === 0) {
+    return (
+      <FavoriteEmptyPage />
+    );
+  }
+
+
   return (
     <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Auth />
           </div>
         </div>
       </header>
