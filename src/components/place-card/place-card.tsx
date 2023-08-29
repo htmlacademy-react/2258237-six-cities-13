@@ -76,7 +76,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{offer.price}{' '}</b>
+            <b className="place-card__price-value">€{offer.price}{''}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
@@ -97,7 +97,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rating * 20}%` }} />
+            <span style={{ width: `${Math.round(offer.rating) * 20}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -108,7 +108,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </Link>
         </h2>
 
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{offer.type[0].toUpperCase() + offer.type.slice(1)}</p>
       </div>
 
     </article>

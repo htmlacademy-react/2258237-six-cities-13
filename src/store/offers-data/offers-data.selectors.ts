@@ -13,4 +13,3 @@ export const getOfferReviews = (state: State): Review[] => state.Data.offerRevie
 export const getSortingType = (state: State): SortingType => state.Data.currentSortingType;
 export const getOffersByCity = (state: State): Offer[] => state.Data.offersByCity;
 export const getFavoriteOffers = (state: State): (Offer | OfferData)[] => state.Data.favoriteOffers;
-// export const getFavoritesStatusLoading = (state: State): boolean => state.Data.isFavoritesLoading;

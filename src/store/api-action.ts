@@ -110,18 +110,22 @@ export const fetchOfferReviewsAction = createAsyncThunk<Review[], string, {
   },
 );
 
-export const postNewCommentAction = createAsyncThunk<Review, Comment, {
+export const postNewCommentAction = createAsyncThunk<Review, Comment & {onSuccess: () => void}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'postNewComment',
   async (param, { extra: api }) => {
-    const {offerId, rating, comment} = param;
-    const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, {rating, comment});
+    const {offerId, rating, comment, onSuccess} = param;
+    const response = await api.post<Review>(`/comments/${offerId}`, { rating, comment });
+    if (response.status === 201) {
+      onSuccess();
+    }
+    const { data } = response;
     return data;
   },
-);
+  );
 
 export const getFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;

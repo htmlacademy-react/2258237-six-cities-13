@@ -1,4 +1,5 @@
 import Comment from '../review/review';
+import { sortReviewByDate } from '../../ustils';
 
 import { Review } from '../../types/review';
 
@@ -7,10 +8,11 @@ type ReviewListProps = {
 }
 
 function ReviewList({reviews}: ReviewListProps) {
+
   return (
     <ul className="reviews__list">
       {
-        reviews.map((review) => (
+        sortReviewByDate(reviews).map((review) => (
           <li className="reviews__item" key={review.id}>
             <Comment reviewData={review}/>
           </li>

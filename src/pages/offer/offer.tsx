@@ -111,18 +111,18 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${offer.rating * 20}%` }} />
+                  <span style={{ width: `${Math.round(offer.rating) * 20}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{offer.type}</li>
+                <li className="offer__feature offer__feature--entire">{offer.type[0].toUpperCase() + offer.type.slice(1)}</li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {`${offer.bedrooms} Bedroom${offer.bedrooms > 1 ? 's' : ''}`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  {`Max ${offer.maxAdults} adult${offer.maxAdults > 1 ? 's' : ''}`}
                 </li>
               </ul>
               <div className="offer__price">
@@ -140,7 +140,7 @@ function OfferPage(): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`offer__avatar-wrapper user__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''}`}>
                     <img
                       className="offer__avatar user__avatar"
                       src={offer.host.avatarUrl}
