@@ -4,7 +4,9 @@ import { COUNT_OF_SYMBOLS_REVIEW } from '../../config';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../config';
 import { postNewCommentAction } from '../../store/api-action';
-import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
+import { getAuthorizationStatus, } from '../../store/auth-process/auth-process.selectors';
+import { getStatusComment } from '../../store/offers-data/offers-data.selectors';
+import { StatusComment } from '../../config';
 
 type CommentHandler = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
@@ -33,6 +35,7 @@ type ReviewFormProps = {
 
 function ReviewForm({id}: ReviewFormProps) {
   const dispatch = useAppDispatch();
+  const statusComment = useAppSelector(getStatusComment);
 
   const [comment, setComment] = useState({rating: '-1', review: ''});
 
@@ -88,6 +91,7 @@ function ReviewForm({id}: ReviewFormProps) {
                 type="radio"
                 onChange={handleCommentChange}
                 checked={comment.rating === score}
+                disabled={statusComment === StatusComment.Loading}
               />
               <label
                 htmlFor={`${score}-stars`}
@@ -109,6 +113,7 @@ function ReviewForm({id}: ReviewFormProps) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleCommentChange}
         value={comment.review}
+        disabled={statusComment === StatusComment.Loading}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -120,7 +125,7 @@ function ReviewForm({id}: ReviewFormProps) {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={canSubmit()}
+          disabled={canSubmit() || statusComment === StatusComment.Loading}
         >
           Submit
         </button>

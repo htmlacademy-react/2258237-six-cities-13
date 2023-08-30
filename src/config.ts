@@ -46,3 +46,10 @@ export enum SliceNames {
   Data = 'Data',
   Auth = 'Auth',
 }
+
+export enum StatusComment {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
+}
