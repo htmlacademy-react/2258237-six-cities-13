@@ -3,8 +3,9 @@ import { Offer, OfferData } from '../../types/offer';
 import FavoriteCityCard from '../../components/favorite-city-card/favorite-city-card';
 import Logo from '../../components/logo/logo';
 import Auth from '../../components/auth/auth';
+import Loader from '../../components/loader/loader';
 import { useAppSelector } from '../../hooks';
-import { getFavoriteOffers } from '../../store/offers-data/offers-data.selectors';
+import { getFavoriteOffers, getFavoritesStatusLoading } from '../../store/offers-data/offers-data.selectors';
 import FavoriteEmptyPage from '../favorite-empty/favorite-empty';
 
 
@@ -16,6 +17,8 @@ type FavoriteCityOffers = {
 
 function FavoritePage(): JSX.Element {
   const offers: (Offer | OfferData)[] = useAppSelector(getFavoriteOffers);
+
+  const isFavoritesLoading = useAppSelector(getFavoritesStatusLoading);
 
   const favoriteCitiesOffers: FavoriteCityOffers[] = [];
 
@@ -46,12 +49,15 @@ function FavoritePage(): JSX.Element {
   });
 
 
+  if (isFavoritesLoading) {
+    return <Loader />;
+  }
+
   if (favoriteCitiesOffers.length === 0) {
     return (
       <FavoriteEmptyPage />
     );
   }
-
 
   return (
     <div className="page">

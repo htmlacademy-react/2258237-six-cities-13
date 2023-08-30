@@ -98,11 +98,14 @@ export const offersData = createSlice({
         state.statusComment = StatusComment.Error;
       })
       .addCase(getFavoriteOffersAction.pending, (state) => {
-        state.isOffersDataLoading = true;
+        state.isFavoritesLoading = true;
       })
       .addCase(getFavoriteOffersAction.fulfilled, (state, action) => {
+        state.isFavoritesLoading = false;
         state.favoriteOffers = action.payload;
-        state.isOffersDataLoading = false;
+      })
+      .addCase(getFavoriteOffersAction.rejected, (state) => {
+        state.isFavoritesLoading = false;
       })
       .addCase(favoritesOfferAction.fulfilled, (state, action) => {
         if (action.meta.arg.status === 1) {
