@@ -15,3 +15,4 @@ export const getOffersByCity = (state: State): Offer[] => state.Data.offersByCit
 export const getFavoriteOffers = (state: State): (Offer | OfferData)[] => state.Data.favoriteOffers;
 export const getStatusComment = (state: State): string => state.Data.statusComment;
 export const getFavoritesStatusLoading = (state: State): boolean => state.Data.isFavoritesLoading;
+export const getErrorOfferData = (state: State): boolean => state.Data.errorOfferData;
