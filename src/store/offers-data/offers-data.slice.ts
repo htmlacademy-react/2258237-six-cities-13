@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CityName, locations } from '../../mocks/locations';
 import { OffersData } from '../../types/state';
-import { SORT_OPTIONS, SliceNames } from '../../config';
+import { SORT_OPTIONS, SliceNames, StatusComment } from '../../config';
 import { OfferData } from '../../types/offer';
 import { SortingType } from '../../types/sorting';
 import { sortPriceUp, sortPriceDown, sortRate } from '../../ustils';
@@ -18,6 +18,7 @@ const initialState: OffersData = {
   offerReviews: [],
   favoriteOffers: [],
   isFavoritesLoading: false,
+  statusComment: StatusComment.Idle,
 };
 
 
@@ -86,8 +87,15 @@ export const offersData = createSlice({
       .addCase(fetchOfferReviewsAction.fulfilled, (state, action) => {
         state.offerReviews = action.payload;
       })
+      .addCase(postNewCommentAction.pending, (state) => {
+        state.statusComment = StatusComment.Loading;
+      })
       .addCase(postNewCommentAction.fulfilled, (state, action) => {
+        state.statusComment = StatusComment.Success;
         state.offerReviews.push(action.payload);
+      })
+      .addCase(postNewCommentAction.rejected, (state) => {
+        state.statusComment = StatusComment.Error;
       })
       .addCase(getFavoriteOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;
