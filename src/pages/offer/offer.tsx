@@ -11,7 +11,7 @@ import Logo from '../../components/logo/logo';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { favoritesOfferAction, fetchOfferDataAction, fetchOfferReviewsAction, fetchOffersNearbyAction } from '../../store/api-action';
 import Auth from '../../components/auth/auth';
-import { getOfferData, getOfferReviews, getOffersNear } from '../../store/offers-data/offers-data.selectors';
+import { getOfferData, getOfferReviews, getOffersNear, getErrorOfferData } from '../../store/offers-data/offers-data.selectors';
 import { getAuthorizationStatus } from '../../store/auth-process/auth-process.selectors';
 import { AuthorizationStatus } from '../../config';
 import { AppRoute } from '../../config';
@@ -23,6 +23,7 @@ function OfferPage(): JSX.Element {
 
   const {id} = useParams();
 
+  const errorOfferData = useAppSelector(getErrorOfferData);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offer = useAppSelector(getOfferData);
   const reviews = useAppSelector(getOfferReviews);
@@ -33,13 +34,13 @@ function OfferPage(): JSX.Element {
   useEffect(() => {
     const needToGetData = offer.id !== id || Object.keys(offer).length === 0;
 
-    if (needToGetData && id) {
+    if (needToGetData && id && !errorOfferData) {
       dispatch(fetchOfferDataAction(id));
       dispatch(fetchOffersNearbyAction(id));
       dispatch(fetchOfferReviewsAction(id));
     }
 
-  }, [offer, id, dispatch, isFavorite]);
+  }, [offer, id, dispatch, isFavorite, errorOfferData]);
 
 
   const handleFavoriteClick = (): void => {

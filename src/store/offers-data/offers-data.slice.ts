@@ -19,6 +19,7 @@ const initialState: OffersData = {
   favoriteOffers: [],
   isFavoritesLoading: false,
   statusComment: StatusComment.Idle,
+  errorOfferData: false,
 };
 
 
@@ -57,6 +58,9 @@ export const offersData = createSlice({
     clearFavortiteOffers: (state) => {
       state.favoriteOffers = [];
     },
+    setErrorOffer: (state) => {
+      state.errorOfferData = false;
+    },
   },
   extraReducers(builder) {
     builder
@@ -73,19 +77,24 @@ export const offersData = createSlice({
       })
       .addCase(fetchOfferDataAction.pending, (state) => {
         state.isOffersDataLoading = true;
+        state.errorOfferData = false;
       })
       .addCase(fetchOfferDataAction.fulfilled, (state, action) => {
-        state.isOffersDataLoading = false;
         state.offerData = action.payload;
+        state.isOffersDataLoading = false;
+        state.errorOfferData = false;
       })
       .addCase(fetchOfferDataAction.rejected, (state) => {
         state.isOffersDataLoading = false;
+        state.errorOfferData = true;
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNear = action.payload;
+        state.errorOfferData = false;
       })
       .addCase(fetchOfferReviewsAction.fulfilled, (state, action) => {
         state.offerReviews = action.payload;
+        state.errorOfferData = false;
       })
       .addCase(postNewCommentAction.pending, (state) => {
         state.statusComment = StatusComment.Loading;
@@ -128,4 +137,4 @@ export const offersData = createSlice({
   }
 });
 
-export const { changeActiveCity, changeActiveOffers, sortOffers, clearFavortiteOffers } = offersData.actions;
+export const { changeActiveCity, changeActiveOffers, sortOffers, clearFavortiteOffers, setErrorOffer } = offersData.actions;

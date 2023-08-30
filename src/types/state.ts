@@ -28,4 +28,5 @@ export type OffersData = {
   favoriteOffers: (Offer | OfferData)[];
   isFavoritesLoading: boolean;
   statusComment: string;
+  errorOfferData: boolean;
 }
